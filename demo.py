@@ -24,32 +24,24 @@ except FileNotFoundError:
         'area': [0, 0.5, 0.4, 0, 0, 0.3, 0.2, 0.7, 0, 0.1]
     })
 
-# Mengubah kolom 'month' dan 'day' menjadi kategori numerik
 data['month'] = data['month'].astype('category').cat.codes
 data['day'] = data['day'].astype('category').cat.codes
 
-# Menambahkan label untuk prediksi (misalnya, 0: tidak ada kebakaran, 1: ada kebakaran)
 data['label'] = data['area'].apply(lambda x: 1 if x > 0 else 0)
 
-# Memisahkan fitur dan label
 X = data.drop(columns=['area', 'label'])
 y = data['label']
 
-# Membagi data menjadi set pelatihan dan pengujian
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-# Menggunakan Random Forest Classifier sebagai model
 model = RandomForestClassifier(n_estimators=100, random_state=42)
 model.fit(X_train, y_train)
 
-# Memprediksi label untuk data pengujian
 y_pred = model.predict(X_test)
 
-# Menghitung akurasi model
 accuracy = accuracy_score(y_test, y_pred)
 print(f'Accuracy: {accuracy}')
 
-# Menampilkan matriks kebingungan
 conf_matrix = confusion_matrix(y_test, y_pred)
 print('Confusion Matrix:')
 print(conf_matrix)
@@ -85,11 +77,9 @@ def predict():
     except ValueError:
         messagebox.showerror("Error", "Please enter valid numerical values")
 
-# Create main window
 root = tk.Tk()
 root.title("Forest Fire Prediction")
 
-# Create input fields
 month_label = tk.Label(root, text="Month:")
 month_label.grid(row=0, column=0, padx=10, pady=5, sticky="e")
 month_entry = tk.Entry(root)
@@ -143,5 +133,4 @@ rain_entry.grid(row=9, column=1, padx=10, pady=5)
 predict_button = tk.Button(root, text="Predict", command=predict)
 predict_button.grid(row=10, column=0, columnspan=2, pady=10)
 
-# Run the application
 root.mainloop()
