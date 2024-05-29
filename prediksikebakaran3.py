@@ -38,68 +38,53 @@ def get_user_input():
 
 new_data = get_user_input()
  
-# Mengonversi dictionary new_data menjadi DataFrame
 new_data_df = pd.DataFrame([new_data])
 
-# Menambahkan data baru ke DataFrame menggunakan pd.concat
 data = pd.concat([data, new_data_df], ignore_index=True)
 
-# Menyimpan DataFrame yang diperbarui ke dalam file
 data.to_csv(filename, index=False)
 
 
 
-# Mengubah kolom 'month' dan 'day' menjadi kategori numerik
 data['month'] = data['month'].astype('category').cat.codes
 data['day'] = data['day'].astype('category').cat.codes
 
-# Menambahkan label untuk prediksi (misalnya, 0: tidak ada kebakaran, 1: ada kebakaran)
 data['label'] = data['area'].apply(lambda x: 1 if x > 0 else 0)
 
-# Memisahkan fitur dan label
 X = data.drop(columns=['area', 'label'])
 y = data['label']
 
 
-# Membagi data menjadi set pelatihan dan pengujian
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
 
-# Menggunakan Random Forest Classifier sebagai model
 model = RandomForestClassifier(n_estimators=100, random_state=42)
 model.fit(X_train, y_train)
 
 
-# Memprediksi label untuk data pengujian
 y_pred = model.predict(X_test)
 
-# Menghitung akurasi model
 accuracy = accuracy_score(y_test, y_pred)
 print(f'Accuracy: {accuracy}')
 
-# Menampilkan matriks kebingungan
+
 conf_matrix = confusion_matrix(y_test, y_pred)
 print('Confusion Matrix:')
 print(conf_matrix)
 
 
-# Memprediksi label untuk data pengujian
+
 y_pred = model.predict(X_test)
 
-# Menghitung akurasi model
 accuracy = accuracy_score(y_test, y_pred)
 print(f'Accuracy: {accuracy}')
 
-# Menampilkan matriks kebingungan
 conf_matrix = confusion_matrix(y_test, y_pred)
 print('Confusion Matrix:')
 print(conf_matrix)
 
-
-# Contoh prediksi baru
 new_data_df = pd.DataFrame([new_data])
 
 
-# Mendapatkan probabilitas prediksi
-proba = model.predict_proba(new_data_df)[0][1]  # Probabilitas untuk kelas "kebakaran"
+proba = model.predict_proba(new_data_df)[0][1] 
 print(f'Prediction: {proba * 100:.2f}% kemungkinan kebakaran')
