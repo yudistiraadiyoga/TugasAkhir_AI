@@ -39,8 +39,8 @@ model.fit(X_train, y_train)
 
 y_pred = model.predict(X_test)
 
-accuracy = accuracy_score(y_test, y_pred)
-print(f'Accuracy: {accuracy}')
+# accuracy = accuracy_score(y_test, y_pred)
+# print(f'Accuracy: {accuracy}')
 
 # conf_matrix = confusion_matrix(y_test, y_pred)
 # print('Confusion Matrix:')
