@@ -39,12 +39,8 @@ model.fit(X_train, y_train)
 
 y_pred = model.predict(X_test)
 
-# accuracy = accuracy_score(y_test, y_pred)
-# print(f'Accuracy: {accuracy}')
+accuracy = accuracy_score(y_test, y_pred)
 
-# conf_matrix = confusion_matrix(y_test, y_pred)
-# print('Confusion Matrix:')
-# print(conf_matrix)
 
 def predict():
     try:
@@ -66,7 +62,7 @@ def predict():
         new_data_df['day'] = new_data_df['day'].astype('category').cat.codes
 
         proba = model.predict_proba(new_data_df)[0][1] 
-        result = f'Prediction: {proba * 100:.2f}% kemungkinan kebakaran'
+        result = f'Prediction: {proba * 100:.2f}% kemungkinan kebakaran, Accuracy: {accuracy * 100}%'
 
         
         global data
