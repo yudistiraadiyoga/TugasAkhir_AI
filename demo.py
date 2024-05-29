@@ -21,7 +21,7 @@ except FileNotFoundError:
         'RH': [51, 33, 27, 42, 35, 26, 30, 28, 44, 36],
         'wind': [6.7, 4.9, 5.4, 5.6, 4.7, 5.1, 5.9, 4.8, 6.2, 5.5],
         'rain': [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        'area': [0, 0.5, 0.4, 0, 0, 0.3, 0.2, 0.7, 0, 0.1]
+        # 'area': [0, 0.5, 0.4, 0, 0, 0.3, 0.2, 0.7, 0, 0.1]
     })
 
 data['month'] = data['month'].astype('category').cat.codes
@@ -39,8 +39,8 @@ model.fit(X_train, y_train)
 
 y_pred = model.predict(X_test)
 
-# accuracy = accuracy_score(y_test, y_pred)
-# print(f'Accuracy: {accuracy}')
+accuracy = accuracy_score(y_test, y_pred)
+print(f'Accuracy: {accuracy}')
 
 # conf_matrix = confusion_matrix(y_test, y_pred)
 # print('Confusion Matrix:')
