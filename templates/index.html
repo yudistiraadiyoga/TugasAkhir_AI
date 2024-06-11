@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forest Fire Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .result {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Forest Fire Prediction</h1>
+        <div class="form-group">
+            <label for="month">Month:</label>
+            <input type="text" id="month" name="month">
+        </div>
+        <div class="form-group">
+            <label for="day">Day:</label>
+            <input type="text" id="day" name="day">
+        </div>
+        <div class="form-group">
+            <label for="FFMC">FFMC:</label>
+            <input type="text" id="FFMC" name="FFMC">
+        </div>
+        <div class="form-group">
+            <label for="DMC">DMC:</label>
+            <input type="text" id="DMC" name="DMC">
+        </div>
+        <div class="form-group">
+            <label for="DC">DC:</label>
+            <input type="text" id="DC" name="DC">
+        </div>
+        <div class="form-group">
+            <label for="ISI">ISI:</label>
+            <input type="text" id="ISI" name="ISI">
+        </div>
+        <div class="form-group">
+            <label for="temp">Temperature (temp):</label>
+            <input type="text" id="temp" name="temp">
+        </div>
+        <div class="form-group">
+            <label for="RH">Relative Humidity (RH):</label>
+            <input type="text" id="RH" name="RH">
+        </div>
+        <div class="form-group">
+            <label for="wind">Wind Speed (wind):</label>
+            <input type="text" id="wind" name="wind">
+        </div>
+        <div class="form-group">
+            <label for="rain">Rainfall (rain):</label>
+            <input type="text" id="rain" name="rain">
+        </div>
+        <button onclick="predict()">Predict</button>
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        function predict() {
+            const data = {
+                month: document.getElementById('month').value,
+                day: document.getElementById('day').value,
+                FFMC: document.getElementById('FFMC').value,
+                DMC: document.getElementById('DMC').value,
+                DC: document.getElementById('DC').value,
+                ISI: document.getElementById('ISI').value,
+                temp: document.getElementById('temp').value,
+                RH: document.getElementById('RH').value,
+                wind: document.getElementById('wind').value,
+                rain: document.getElementById('rain').value
+            };
+
+            fetch('/predict', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.error) {
+                    document.getElementById('result').innerText = result.error;
+                } else {
+                    document.getElementById('result').innerText = `Prediction: ${result.prediction}, Accuracy: ${result.accuracy}`;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
+</body>
+</html>
