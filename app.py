@@ -42,6 +42,7 @@ y_pred = model.predict(X_test)
 
 accuracy = accuracy_score(y_test, y_pred)
 
+
 @app.route('/')
 def home():
     return render_template('index.html')
