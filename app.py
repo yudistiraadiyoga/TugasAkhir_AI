@@ -71,8 +71,8 @@ def predict():
         proba = model.predict_proba(new_data_df)[0][1]
 
         # Batasi nilai prediksi maksimal 80%
-        if proba > 0.8:
-            proba = 0.8
+        # if proba > 0.8:
+        #     proba = 0.8
 
         result = {
             'prediction': f'{proba * 100:.2f}% probability of fire',
