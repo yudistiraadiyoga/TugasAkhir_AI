@@ -1,4 +1,4 @@
-# ReadMe
+# README
 
 Topik         : Prediksi kebakaran hutan
 
